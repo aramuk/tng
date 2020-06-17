@@ -1,3 +1,4 @@
+#!/pkg/python/3.6.8/bin/python3.6
 import requests
 import json
 from PIL import Image
@@ -74,48 +75,3 @@ class TNGRequest():
         endpoint = f'/snapshots/{snapshot}/subhalos/{subhalo}/vis.png'
         response = self.get(endpoint, DOWNLOAD_PARAMS, logfile)
         return Image.open(BytesIO(response.content))
-    
-    @staticmethod
-    def save_image(image: Image, path: str):
-        """Saves the passed image object to the passed path"""
-        image = image.crop((120, 44, 1102, 1030))
-        image.save(path)
-        # image.show()
-
-if __name__ == '__main__':
-    # Creating an instance of TNGRequest
-    # Put API keys in a seperate file for security reasons
-    tng = TNGRequest('TNG100-1', 'api-key.json')
-
-    # Query an endpoint
-    #   - endpoint: the API endpoint to query
-    #   - params: a dict object with any query params (optional)
-    #   - logfile: a file in which to record all requests made (optional)
-    # returns .json responses as a dict, other formats as Request.Response
-    image = tng.get('snapshots/99/subhalos/468590/vis.png', params={'partType': 'stars'}, logfile=open('log.txt','w'))
-    
-    # List the subhalos in a snapshot of the simulation
-    #   - snapshot: snapshot with the simulation to consider (default=99)
-    #   - start: entry to start at (default=0)
-    #   - quantity: number of subhalos to list; max 100 (default=100)
-    #   - sort_params: ways to sort the snapshot (optional)
-    #   - logfile: a file in which to record all requests made (optional)
-    # returns a dict of up 100 relevant subhalos
-    response = tng.list_snapshot(snapshot=99, start=50, quantity=50, sort_params={'halfmassrad_stars__lte': 10.0}, logfile=open('log.txt','w'))
-    subhalos = response['results']
-
-    # Get the .json data for a singular subhalo
-    #   - snapshot: snapshot to consider
-    #   - subhalo_id: subhalo to get the .json for
-    #   - logfile: a file in which to record all requests made (optional)
-    # returns a dict with data for the passed subhalo_id
-    subhalo_data = tng.get_subhalo_json(99, 468590, logfile=open('log.txt','w'))
-
-    # Visualize a subhalo
-    #   - snapshot: snapshot to consider
-    #   - subhalo_id: subhalo to get the image for
-    #   - params: dict of image specifications
-    #   - logfile: a file in which to record all requests made (optional)
-    # returns a PIL.Image object of the visualization
-    image = tng.get_subhalo_image(99, 468590, params={'partType':'gas'}, logfile=open('log.txt','w')) 
-    image.show()
