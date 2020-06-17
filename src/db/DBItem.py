@@ -1,3 +1,4 @@
+#!/pkg/python/3.6.8/bin/python3.6
 from pathlib import Path
 
 class DBItem:

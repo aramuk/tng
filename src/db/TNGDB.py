@@ -1,5 +1,4 @@
-#!/usr/bin/python3
-
+#!/pkg/python/3.6.8/bin/python3.6
 import sqlite3
 from socket import gethostname
 from pathlib import Path

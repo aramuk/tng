@@ -2,6 +2,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from astropy.io import fits
 
+#!/pkg/python/3.6.8/bin/python3.6
 class Image:
 
     def __init__(self, path):

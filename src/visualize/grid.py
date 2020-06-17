@@ -1,5 +1,4 @@
-#!/bin/python3.6
-
+#!/pkg/python/3.6.8/bin/python3.6
 from math import ceil
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,7 +18,7 @@ def plot_imgs(images, dim, fig_args, plt_args):
 
 def plot_mats(matrices, dim, fig_args, plt_args):
 	def matshow(axis, mat, **kwargs):
-		axis.imshow(mat, **kwargs)
+		axis.matshow(mat, **kwargs)
 	return plot_grid(matrices, matshow, dim, fig_args, plt_args)
 
 def plot_sequence(I: np.ndarray, ax: plt.Axes, funcs: list, **kwargs):
