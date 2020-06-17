@@ -1,5 +1,6 @@
 #!/pkg/python/3.6.8/bin/python3.6
 from pathlib import Path
+from .Image import Image
 
 class DBItem:
 
@@ -11,7 +12,7 @@ class DBItem:
             raise ValueError(f'Can not find an image at {str(path)}')
         self.location = loc
     
-    def list_items(self, filetype=None, state=None,):
+    def _list_items(self, filetype=None, state=None,):
         fits = png = raw = ready = True
         if filetype is None:
             fits = png = True
@@ -26,23 +27,35 @@ class DBItem:
         else:
             raise ValueError(f'state must be None, "raw", or "ready".')
 
-        def _list():
+        def _listgen():
             loc = self.location
             if fits:
                 if raw:
                     for img in (loc / 'fits' / 'raw').iterdir():
-                        yield img
+                        yield Image(str(img))
                 if ready:
                     for img in (loc / 'fits' / 'ready').iterdir():
-                        yield img
+                        yield Image(str(img))
             if png:
                 if raw:
                     for img in (loc / 'png' / 'raw').iterdir():
-                        yield img
+                        yield Image(str(img))
                 if ready:
                     for img in (loc / 'png' / 'ready').iterdir():
-                        yield img
-        return _list
+                        yield Image(str(img))
+        return _listgen
 
     def __iter__(self):
-        return self.list_items('ready')
+        return self._list_items('ready')
+
+    def raw(self, filetype=None):
+        return self._list_items(filetype, 'raw')
+
+    def ready(self, filetype=None):
+        return self._list_items(filetype, 'ready')
+
+    def fits(self, state=None):
+        return self._list_items('fits', state)
+
+    def png(self, state=None):
+        return self._list_items('png', state)
