@@ -3,9 +3,9 @@ import numpy as np
 import cv2
 from scipy.ndimage import gaussian_filter
 
-def extract_subhalo(img, outpath):
+def extract_subhalo(data, outpath):
     # Load and Resize image as needed
-    img = cv2.resize(img, (512,512), interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(data, (512,512), interpolation=cv2.INTER_CUBIC)
     # Gaussian filter
     imgray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     imgray = gaussian_filter(imgray,sigma=5)

@@ -64,11 +64,11 @@ class TNGDB():
 		return 
 
 	def execute(self, *args):
-		self._execute('execute', *args)
+		return self._execute('execute', *args)
 
 	def executemany(self, *args):
-		self._execute('executemany', *args)
+		return self._execute('executemany', *args)
 
 	def executescript(self, *args):
-		self._execute('executescript', *args)
+		return self._execute('executescript', *args)
 	
